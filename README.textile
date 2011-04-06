@@ -1,0 +1,20 @@
+h3. What is this?
+
+This is a speech recognition application built on sphinx4 (http://cmusphinx.sourceforge.net/sphinx4/)
+
+It contains a few voice commands to control the lights / door locks / tv in my apartment.
+
+
+h3. Setup
+
+* cd src/flat10c/flat_voice_commands/ && cp auth.config.xml.example auth.config.xml
+* Edit auth.config.xml with your username and password.
+
+You need 'ant' to compile.
+
+* sudo apt-get install ant    (on Ubuntu linux)
+
+To compile, run:
+
+* ant
+
