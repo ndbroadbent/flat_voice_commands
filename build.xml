@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************** -->
+<!-- *                                                        * -->
+<!-- *          Apache Ant build file used to build           * -->
+<!-- *                  Flat Voice Commands                   * -->
+<!-- *                                                        * -->
+<!-- *     For more information:  http://ant.apache.org/      * -->
+<!-- *                                                        * -->
+<!-- ********************************************************** -->
+
+<project basedir="." default="all" name="FlatVoiceCommands">
+
+    <property name="version" value="1_0_0"/>
+    <property name="src_dir" value="src"/>
+    <property name="build_dir" value="bld"/>
+    <property name="classes_dir" value="${build_dir}"/>
+    <property name="lib_dir" value="lib"/>
+    <property name="bin_dir" value="bin"/>
+    <property name="deploy_dir" value="deploy"/>
+    <path id="libs">
+        <pathelement path="${classes_dir}"/>
+        <pathelement location="${lib_dir}/sphinx4.jar"/>
+        <pathelement location="${lib_dir}/jsapi.jar"/>
+    </path>
+
+    <!-- ********************************************************** -->
+    <!-- *                                                        * -->
+    <!-- * Checks that config file has been created               * -->
+    <!-- *                                                        * -->
+    <!-- ********************************************************** -->
+    <target name="check_config_present">
+        <available file="${src_dir}/flat10c/flat_voice_commands/auth.config.xml" property="config_present"/>
+    </target>
+
+    <target name="issue_config_warning"
+            unless="config_present">
+        <echo>
+            Cannot find src/voice_commands.config.xml.
+            Please copy the voice_commands.config.xml.example file
+            and setup your authentication.
+        </echo>
+    </target>
+
+    <target name="all"
+            depends="make_lib_dir,
+	             check_config_present,
+               issue_config_warning,
+	             compile_flat_voice_commands"
+            description="Compiles Flat Voice Commands"/>
+
+    <target name="make_lib_dir">
+        <mkdir dir="${lib_dir}"/>
+    </target>
+
+    <target name="compile_flat_voice_commands">
+        <mkdir dir="${classes_dir}"/>
+        <javac debug="true"
+               listfiles="true"
+               deprecation="true"
+               includeAntRuntime="false"
+               srcdir="${src_dir}"
+               destdir="${classes_dir}"
+               includes="flat10c/**">
+            <classpath refid="libs"/>
+        </javac>
+        <copy file="${src_dir}/flat10c/flat_voice_commands/flat_commands.gram"
+              todir="${classes_dir}/flat10c/flat_voice_commands"/>
+        <copy file="${src_dir}/flat10c/flat_voice_commands/sphinx.config.xml"
+              todir="${classes_dir}/flat10c/flat_voice_commands"/>
+        <copy file="${src_dir}/flat10c/flat_voice_commands/auth.config.xml"
+              todir="${classes_dir}/flat10c/flat_voice_commands"/>
+        <mkdir dir="${bin_dir}"/>
+        <jar destfile="${bin_dir}/FlatVoiceCommands.jar"
+             manifest="${src_dir}/flat10c/flat_voice_commands/flat_voice_commands.Manifest"
+             basedir="${classes_dir}"
+             includes="flat10c/**"
+             compress="true"/>
+    </target>
+
+    <!-- ********************************************************** -->
+    <!-- *                                                        * -->
+    <!-- * Deletes all build output and *~ files                  * -->
+    <!-- *                                                        * -->
+    <!-- ********************************************************** -->
+    <target name="clean" description="Delete all build output">
+        <delete>
+            <fileset defaultexcludes="no" dir="." includes="**/*~"/>
+        </delete>
+        <delete dir="${build_dir}" failonerror="false"/>
+        <delete dir="${bin_dir}" failonerror="false"/>
+        <delete dir="${deploy_dir}"/>
+    </target>
+
+</project>
+

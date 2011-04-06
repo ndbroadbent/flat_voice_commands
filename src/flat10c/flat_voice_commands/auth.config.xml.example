@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+  <!-- ******************************************************** -->
+  <!-- Authentication for EvoT20 Lock and XBMC                  -->
+  <!-- ******************************************************** -->
+
+  <server_auth>
+    <xbmc>
+      <username>************</username>
+      <password>************</password>
+    </xbmc>
+    <lock>
+      <username>************</username>
+      <password>************</password>
+    </lock>
+  </server_auth>
+
+</config>
+

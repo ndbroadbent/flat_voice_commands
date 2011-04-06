@@ -1,0 +1,12 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar for Flat Voice Commands
+ */
+
+grammar flat_commands;
+
+public <power_control> = (Turn on | Turn off) ( TV | Light | Fan | Weather Bucket );
+public <power_control2> = Turn ( TV | Light | Fan | Weather Bucket ) (On | Off);
+public <door_control> = (Unlock Door | Open Door);
+
