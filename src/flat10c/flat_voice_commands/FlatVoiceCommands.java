@@ -10,7 +10,7 @@
  *
  */
 
-package flat10c.flat_lock_commands;
+package flat10c.flat_voice_commands;
 
 import edu.cmu.sphinx.frontend.util.Microphone;
 import edu.cmu.sphinx.recognizer.Recognizer;
